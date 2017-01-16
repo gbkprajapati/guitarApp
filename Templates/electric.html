@@ -1,0 +1,46 @@
+<div class="guitarCategory">
+	<h1>Guitar Category : - {{guitarCategory}}</h1>
+</div>
+
+<div class="imagesClass">
+     		<!-- <img ng-repeat="image in guitarData " ng-src="{{image.image_path}}" width="100px" height="100px" /> -->
+
+     		<img  ng-src="{{guitarData[current].image_path}}" width="100px" height="100px" /> 
+     		Guitat price  = {{guitarData[current].price}}
+</div>
+
+
+
+<div class="buttonsClasss">
+	<div class="previousButton">
+		<button ng-click="Previous();">Previous</button>
+	</div>
+	<div class="nextButton">
+		<button ng-click="Next();" >Next</button>	
+	</div>			
+</div>
+
+
+
+<div class="infoClass">
+    <div class="productInfo">
+    	<h2>Product Info </h2>
+    	<p>{{guitarData[current].product_description}}</p>
+    </div>
+    <div class="shippingInfo">
+    	<h2>Shipping Info </h2>
+    	<p>{{guitarData[current].shipping_details}}</p> 
+    </div>
+
+    <div class="customerReview">
+    	<h2>Customere review</h2>
+    	<p>{{guitarData[current].customer_reviews}}</p>
+    </div>
+    
+</div>
+
+
+<div class="buyButton">
+	<button ng-click="buyButton()" >Buy</button>
+</div>
+
