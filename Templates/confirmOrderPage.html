@@ -1,0 +1,20 @@
+<h1>Thank you very much</h1>
+
+
+<div>
+	<h2>Conformation Order </h2>
+
+		<div class="imageDetails">
+			<img  ng-src="{{guitarData[image].image_path}}" width="100px" height="100px" />
+		</div>
+		<div class = "UserDetails">
+			First Name : {{firstName}}<br>
+			last Name : {{lastName}}<br>
+			Email id : {{emailId}}<br>
+
+			Total Price is : {{(guitarData[productPrice].price)+ (guitarData[shippingCharges].shipping_details | getInt) | currency}}<br>
+		</div>	
+
+
+		<button ng-click = "goHome()">Go to Home</button>
+</div>

@@ -11,11 +11,15 @@ var app = angular.module("routeApp",["ngRoute"]);
 	                 		templateUrl: "Templates/purchasePage.html",
 	                 		controller: "reviewPageController"
 	                 	})
+	                 	.when("/confirmPageOrder" , {
+	                 		templateUrl:"Templates/confirmOrderPage.html",
+	                 		controller: "confirmOrderController"
+	                 	});
             });
 
 
 
-           	///controller Comes here
+           	///electricController Start
            	app.controller("electricController" , function($scope,$http,$location,sharedData){
            			$scope.guitarCategory = "Electric Guitar List";
            			$scope.current = 0 ;
@@ -56,14 +60,26 @@ var app = angular.module("routeApp",["ngRoute"]);
         				sharedData.shippingCharges = $scope.current;
         			};
                  	 
-           	});
+           	}); 	///electricController End
 
-
-           	app.controller("reviewPageController" , function($scope,$http,sharedData){
+           	//Review page Controller start 
+           	app.controller("reviewPageController" , function($scope,$http,sharedData,$location,getUserData){
 				$scope.image = sharedData.imageShow;
 				$scope.productDescription  = sharedData.productDescription ;
 				$scope.productPrice = sharedData.productPrice;
 				$scope.shippingCharges = sharedData.shippingCharges;
+
+
+				//User Details
+				$scope.firstName = '';
+				$scope.lastName = '';
+				$scope.creditCardNumber = '';
+				$scope.emailId = '';
+
+                //Show div when user click on review order 
+
+
+
 				$http.get('json/guitardata.json')
 	                 	.then(function(resp){
 	                 		
@@ -71,7 +87,69 @@ var app = angular.module("routeApp",["ngRoute"]);
 	            })
 
 	             //console.log(guitarData[shippingCharges].shipping_details);
+	            //Preview Order info  	
+
+
+	           /* $scope.hideDiv = true;
+                $scope.showDiv = false;*/
+
+	            $scope.previewOrderInfo = function(){
+
+	            	$scope.showDiv = true;
+	            	$scope.hideDiv = true;
+	            	$scope.previewFirstName = $scope.firstName;
+
+	            	$scope.previewLastName = $scope.lastName;
+	            	$scope.previewCreditCardNumber = $scope.creditCardNumber;
+	            	$scope.previewEmailId  = $scope.emailId;
+	            }; 
+
+	            $scope.editOrder =  function(){
+	            	$scope.showDiv = false;
+	                $scope.hideDiv = false;
+	                $scope.previewFirstName = $scope.firstName;
+	            	$scope.previewLastName = $scope.lastName;
+	            	$scope.previewCreditCardNumber = $scope.creditCardNumber;
+	            	$scope.previewEmailId  = $scope.emailId;
+	            }
+
+	            $scope.confirmOrder = function(){
+	            	$location.path("/confirmPageOrder");
+	            	getUserData.getfirstName = $scope.previewFirstName;
+	            	console.log(getUserData.getfirstName);
+
+	            	getUserData.getlastName = $scope.previewLastName;
+	            	getUserData.getuserEmailId = $scope.previewEmailId;
+	            };
+
+
+			}); //	Review page Controller end 
+
+
+           	//Confirm Order Controller Start
+			app.controller("confirmOrderController" , function($scope,sharedData,getUserData,$http,$location){
+
+				    
+				    $scope.image = sharedData.imageShow;
+					$scope.firstName = getUserData.getfirstName;
+					$scope.lastName = getUserData.getlastName;
+					$scope.emailId =  getUserData.getuserEmailId;
+					$scope.productPrice = sharedData.productPrice;
+					$scope.shippingCharges = sharedData.shippingCharges;
+
+					$http.get('json/guitardata.json')
+		                 	.then(function(resp){
+		                 		
+		                 		$scope.guitarData = resp.data.allProducts;
+		            })
+
+		            $scope.goHome = function(){
+		            	$location.path("/");
+		            };
+
+
 			});
+
 
 
 
@@ -80,7 +158,17 @@ var app = angular.module("routeApp",["ngRoute"]);
 				this.imageShow = '';
 				this.productDescription = '';
 				this.productPrice = '';
-				this.shippingCharges = '';	
+				this.shippingCharges = '';
+
+
+			});
+
+			//service for get user data
+
+			app.service('getUserData', function(){
+				this.getfirstName = '';
+				this.getlastName = '';
+				this.getuserEmailId = '';
 			});
 
 
