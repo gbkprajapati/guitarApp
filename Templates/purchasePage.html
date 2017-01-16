@@ -5,7 +5,7 @@
 	<img  ng-src="{{guitarData[image].image_path}}" width="100px" height="100px" /> 
 </div>
 
-<div style >
+<div>
 	<h2>Product Description :- </h2>
 	<p>{{guitarData[productDescription].product_description}}</p>
 
@@ -17,8 +17,27 @@
 	</div> 
 </div>
 
-<div class="formClass">
+<div class="formClass" ng-hide = "hideDiv">
 		<h1>Purchase Form</h1>
-		First Name: <input type="text" ng-model="firstname"> <br>
-		Last  Name: <input type="text" ng-model="Lastname"> <br>
+		First Name: <input type="text" ng-model="firstName" placeholder="Enter First Name" > <br>
+		Last  Name: <input type="text" ng-model="lastName" placeholder="Enter Last Name"> <br>
+		Credit Card Details : <input type="number" ng-model="creditCardNumber" placeholder="Credit Card Number"><br>
+		Email ID : <input type="email" ng-model="emailId" placeholder="Enter email address"><br>
+
+		<button ng-click="previewOrderInfo()">Review Order</button>
+</div>
+<br>
+
+<div class="previewOrderInfo" ng-show = "showDiv">
+		<h2> Preview Order </h2>
+		First Name : {{previewFirstName}} <br>
+		Last Name : {{previewLastName}}<br>
+		Credit Card details : {{previewCreditCardNumber}}<br>
+		Email ID  : {{previewEmailId}}<br>
+		Order Total : {{(guitarData[productPrice].price)+ (guitarData[shippingCharges].shipping_details | getInt) | currency}}<br><br>
+
+		<button ng-click="editOrder()"> Edit </button> <br>
+		<button ng-click="confirmOrder()"> Confirm Order</button>
+
+
 </div>
