@@ -14,6 +14,8 @@ var app = angular.module("routeApp",["ngRoute"]);
             });
 
 
+
+           	///controller Comes here
            	app.controller("electricController" , function($scope,$http,$location,sharedData){
            			$scope.guitarCategory = "Electric Guitar List";
            			$scope.current = 0 ;
@@ -50,7 +52,8 @@ var app = angular.module("routeApp",["ngRoute"]);
         				//console.log($scope.data = $scope.guitarData[current].price);
         				sharedData.imageShow = $scope.current;
         				sharedData.productDescription = $scope.current;
-        				
+        				sharedData.productPrice  = $scope.current;
+        				sharedData.shippingCharges = $scope.current;
         			};
                  	 
            	});
@@ -59,20 +62,34 @@ var app = angular.module("routeApp",["ngRoute"]);
            	app.controller("reviewPageController" , function($scope,$http,sharedData){
 				$scope.image = sharedData.imageShow;
 				$scope.productDescription  = sharedData.productDescription ;
-
+				$scope.productPrice = sharedData.productPrice;
+				$scope.shippingCharges = sharedData.shippingCharges;
 				$http.get('json/guitardata.json')
 	                 	.then(function(resp){
 	                 		
 	                 		$scope.guitarData = resp.data.allProducts;
 	            })
 
-
+	             //console.log(guitarData[shippingCharges].shipping_details);
 			});
 
+
+
+           	/// Services Comes here
             app.service('sharedData',function(){
 				this.imageShow = '';
 				this.productDescription = '';
-					
+				this.productPrice = '';
+				this.shippingCharges = '';	
+			});
+
+
+			//filter comes here
+			app.filter('getInt', function(){
+				return function(valString){
+					var number = parseInt(valString.match(/[0-9]+/)[0], 10);
+        			return number;
+				};
 			});
 
 			

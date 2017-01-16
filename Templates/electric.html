@@ -6,7 +6,7 @@
      		<!-- <img ng-repeat="image in guitarData " ng-src="{{image.image_path}}" width="100px" height="100px" /> -->
 
      		<img  ng-src="{{guitarData[current].image_path}}" width="100px" height="100px" /> 
-     		Guitat price  = {{guitarData[current].price}}
+     		Guitat price  = {{guitarData[current].price | currency}}
 </div>
 
 
